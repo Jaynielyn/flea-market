@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
+use App\Models\Item;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +16,7 @@ use App\Http\Controllers\ItemController;
 */
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [ItemController::class, 'index']);
+    Route::get('/', [ItemController::class, 'index'])->name('index');
+    Route::get('/sell', [ItemController::class, 'sell'])->name('sell');
+    Route::post('/image_upload', [ItemController::class, 'store'])->name('image_upload');
 });

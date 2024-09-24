@@ -11,10 +11,11 @@
 </head>
 
 <body>
-    <h1><img src="img/logo.svg"></h1>
+    @component('components.header')
+    @endcomponent
 
     <main>
-        @yield('content')
+        @yield('main')
     </main>
 </body>
 
