@@ -14,7 +14,7 @@
                     <button class="logout__btn">ログアウト</button>
                 </form>
             </li>
-            <li class="header-nav-item"><a class="menu__link" href="/">マイページ</a></li>
+            <li class="header-nav-item"><a class="menu__link" href="/mypage">マイページ</a></li>
             @endif
 
             <li class="header-nav-item">

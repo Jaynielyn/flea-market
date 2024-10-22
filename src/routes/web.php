@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
-use App\Models\Item;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Routing\Route as RoutingRoute;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,15 @@ use App\Models\Item;
 |
 */
 
+Route::get('/', [ItemController::class, 'index'])->name('index');
+
 Route::middleware('auth')->group(function () {
-    Route::get('/', [ItemController::class, 'index'])->name('index');
+    //出品
     Route::get('/sell', [ItemController::class, 'sell'])->name('sell');
     Route::post('/image_upload', [ItemController::class, 'store'])->name('image_upload');
+
+    //PROFILE
+    Route::get('/mypage', [ProfileController::class, 'mypage'])->name('mypage');
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::post('/profile', [ProfileController::class, 'create'])->name('profile_edit');
 });

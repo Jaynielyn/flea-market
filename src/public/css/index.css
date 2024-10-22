@@ -1,0 +1,15 @@
+.post__img {
+    width: 330px;
+    height: 220px;
+    object-fit: cover;
+}
+
+.imgContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.post__img {
+    margin-left: 20px;
+    margin-top: 20px;
+}

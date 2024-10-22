@@ -1,5 +1,5 @@
 <div class="header__logo">
-    <img src="img/logo.svg">
+    <a href="/"><img src="img/logo.svg"></a>
     @if(Auth::check())
     <x-menu />
     @endif

@@ -12,11 +12,11 @@
     </div>
 
     <div class="recommendation">
-        @foreach ($images as $image)
         <div class="imgContainer">
+            @foreach ($images as $image)
             <img class="post__img" src="{{ \Storage::url($image->img_url) }}" width="20%">
+            @endforeach
         </div>
-        @endforeach
     </div>
 
     <div class="mypage">
