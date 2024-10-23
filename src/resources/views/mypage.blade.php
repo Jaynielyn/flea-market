@@ -10,7 +10,7 @@
         <div class="mypage__details">
             <div class="left">
                 @if($is_image)
-                <img src="/storage/profile_images/{{ Auth::id() }}.jpg" width="100px" height="100px">
+                <img class="img" src="/storage/profile_images/{{ Auth::id() }}.jpg" width="100px" height="100px">
                 @endif
             </div>
 
