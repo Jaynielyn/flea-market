@@ -41,4 +41,12 @@ class ItemController extends Controller
 
         return redirect()->route('index');
     }
+
+    //詳細ページ
+    public function detail($id)
+    {
+        $item = Item::find($id);
+
+        return view('detail', ['item' => $item]);
+    }
 }

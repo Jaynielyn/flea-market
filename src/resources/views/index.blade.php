@@ -14,7 +14,9 @@
     <div class="recommendation">
         <div class="imgContainer">
             @foreach ($images as $image)
-            <img class="post__img" src="{{ \Storage::url($image->img_url) }}" width="20%">
+            <a href="/detail/{{ $image->id }}">
+                <img class="post__img" src="{{ \Storage::url($image->img_url) }}" width="20%">
+            </a>
             @endforeach
         </div>
     </div>
