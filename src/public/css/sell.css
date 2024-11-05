@@ -1,0 +1,95 @@
+.sell__page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+}
+
+.sell__form {
+    width: 35%;
+    height: 100%;
+}
+
+.sell__inner {
+    display: flex;
+    flex-direction: column;
+    margin-top: 35px;
+}
+
+.sell__heading {
+    font-size: 40px;
+}
+
+.box {
+    text-align: center;
+    height: 100px;
+    padding: 0.5em 1em;
+    margin: 5px 0;
+    font-weight: bold;
+    color: #6091d3;
+    /*文字色*/
+    background: #FFF;
+    border: solid 1px #5f5f5f;
+    /*線*/
+    border-radius: 10px;
+    /*角の丸み*/
+}
+
+.img__input {
+    margin: 35px 0;
+    padding: 0;
+}
+
+.img__input::file-selector-button {
+    font-weight: bold;
+    color: #ff5555;
+    background-color: white;
+    font-size: 16px;
+    border: solid #ff5555 2px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.sell__content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.sell__content-under {
+    margin-top: 25px;
+}
+
+.sell__ttl {
+    font-size: 20px;
+    color: #5f5f5f;
+    border-bottom: 1px solid #5f5f5f;
+    padding-bottom: 10px;
+}
+
+.label {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.input {
+    margin-top: 5px;
+    height: 40px;
+}
+
+.input__textarea {
+    height: 125px;
+}
+
+.sell__btn {
+    margin-top: 25px;
+    width: 100%;
+    height: 50px;
+    background-color: #ff5555;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+}

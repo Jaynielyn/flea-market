@@ -96,15 +96,18 @@ form {
 }
 
 .btn {
+    display: block;
     width: 60%;
-    height: 50px;
-    background-color: #ff5555;
+    padding: 15px 0;
+    background: #ff5555;
     color: white;
     font-weight: bold;
     font-size: 18px;
-    border: none;
     border-radius: 5px;
+    color: #FFF;
     cursor: pointer;
+    text-decoration: none;
+    text-align: center;
 }
 
 .section__title {

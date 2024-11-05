@@ -12,16 +12,17 @@
 
         <div class="sell__wrapper">
             <div class="sell__inner">
-                <h2 class="sell__ttl-img">商品画像</h2>
                 <div class="sell__content">
-                    <label for="img_url" class="img">画像アップロード</label>
-                    <input type="file" class="img__input" name="img_url" id="img_url">
+                    <label for="img_url" class="label img">商品画像</label>
+                    <div class="box">
+                        <input type="file" class="img__input" name="img_url" id="img_url">
+                    </div>
                 </div>
             </div>
 
             <div class="sell__inner">
                 <h2 class="sell__ttl">商品の詳細</h2>
-                <div class="sell__content">
+                <div class="sell__content sell__content-under">
                     <label class="label">カテゴリー</label>
                     <input class="input" type="text" name="category">
                 </div>
@@ -33,7 +34,7 @@
 
             <div class="sell__inner">
                 <h2 class="sell__ttl">商品名と説明</h2>
-                <div class="sell__content">
+                <div class="sell__content sell__content-under">
                     <label class="label">商品名</label>
                     <input class="input" type="text" name="name">
                 </div>
@@ -45,7 +46,7 @@
 
             <div class="sell__inner">
                 <h2 class="sell__ttl">販売価格</h2>
-                <div class="sell__content">
+                <div class="sell__content sell__content-under">
                     <label class="label">販売価格</label>
                     <input class="input" type="text" name="price" placeholder="¥">
                 </div>

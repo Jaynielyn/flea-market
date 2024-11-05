@@ -38,7 +38,7 @@
             </div>
 
             <div class="detail__btn">
-                <input class="btn" type="submit" value="購入する">
+                <a class="btn" href="{{ route('purchase', ['id' => $item->id]) }}">購入する</a>
             </div>
 
             <!-- 説明 -->
@@ -63,8 +63,7 @@
                     <label class="label">商品の状態：</label>
                     <div class="content__txt">
                         <p class="condition__txt">良好</p>
-                    </div
-                        </div>
+                    </div>
                 </div>
             </div>
     </form>

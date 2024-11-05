@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Profile');
     }
+
+    public function sold()
+    {
+        return $this->hasMany('App\Models\Sold');
+    }
 }

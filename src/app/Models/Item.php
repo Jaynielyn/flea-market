@@ -15,4 +15,9 @@ class Item extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function sold()
+    {
+        return $this->hasMany('App\Models\Sold');
+    }
 }
