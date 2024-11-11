@@ -1,4 +1,120 @@
-html,body {
+/* リセット */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* ヘッダー */
+.header {
+    background-color: #000;
+    color: #fff;
+    height: 7%;
+    width: 100%;
+}
+
+/* ヘッダー全体を画面いっぱいに広げる */
+.header__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 30px;
+}
+
+/* ロゴ */
+.header__logo {
+    display: flex;
+    justify-content: flex-start;
+    flex: 1;
+    margin-top: 13px;
+}
+
+.header__logo img {
+    height: 40px;
+}
+
+/* 検索ボックス */
+.header__search {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    margin-top: 13px;
+}
+
+.header__search input {
+    height: 40px;
+    width: 100%;
+    max-width: 500px;
+    /* 画面いっぱいに近い長さにする */
+    border-radius: 5px;
+    border: none;
+}
+
+/* メニュー */
+.header__menu {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    margin-top: 13px;
+    margin-right: 40px;
+}
+
+.header__menu-list {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header__search-input::placeholder {
+    padding-left: 15px;
+    color: #000;
+    font-size: 18px;
+}
+
+.header__menu-list li {
+    list-style: none;
+}
+
+.menu__link {
+    color: #fff;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 40px;
+}
+
+.menu__link:hover {
+    text-decoration: none;
+}
+
+/* 出品ボタン */
+.sell__btn {
+    background-color: white;
+    border-radius: 5px;
+}
+
+.sell__link-btn {
+    color: #000;
+    text-decoration: none;
+    padding: 10px 22px;
+    display: block;
+}
+
+.sell__link-btn:hover {
+    text-decoration: none;
+}
+/* 全体幅いっぱいに広げる */
+body,
+html {
     height: 100%;
     margin: 0;
+    padding: 0;
+    width: 100%;
 }

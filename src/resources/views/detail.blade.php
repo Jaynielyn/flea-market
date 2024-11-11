@@ -3,6 +3,7 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/detail.css') }}">
 @endsection
+<x-header></x-header>
 
 @section('main')
 <div class="detail__page">
@@ -24,17 +25,19 @@
                     <p class="price">¥{{ $item->price ?? '値段' }}</p>
                 </div>
 
+                <!-- いいねとコメント機能 -->
                 <div class="detail__act">
-                    <div class="act__star">
-                        <img class="stars" src="{{ asset('img/star-regular.svg') }}">
-                        <span class="act__count">3</span>
-                    </div>
-                    <div class="act__comment">
-                        <img class="comments" src="{{ asset('img/comment-regular.svg') }}">
-                        <span class="act__count">14</span>
-                    </div>
-                </div>
+                    <!-- いいね機能 -->
+                    
 
+                    <!-- コメント機能 -->
+                    <a href="{{ route('comment.show', ['item_id' => $item->id]) }}" class="act__comment">
+                        <img class="comments" src="{{ asset('img/comment-regular.svg') }}" alt="コメント">
+                        <span id="commentCount" class="act__count">{{ $item->comments ? $item->comments->count() : 0 }}</span>
+                    </a>
+
+
+                </div>
             </div>
 
             <div class="detail__btn">
@@ -46,7 +49,6 @@
                 <h2 class="section__title">商品説明</h2>
                 <p class="detail__color">カラー：<span>グレー</span></p>
                 <p class="description__content">{{ $item->description ?? '商品の状態は良好です。傷もありません。' }}</p>
-                <p>購入後、即発送いたします。</p>
             </div>
 
             <!-- 情報 -->

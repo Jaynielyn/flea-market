@@ -3,6 +3,7 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/purchase.css') }}">
 @endsection
+<x-header></x-header>
 
 @section('main')
 <form class="purchase__page" action="{{ route('purchase.store') }}" method="POST">

@@ -20,4 +20,14 @@ class Item extends Model
     {
         return $this->hasMany('App\Models\Sold');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

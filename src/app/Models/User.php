@@ -46,13 +46,23 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Item');
     }
 
-    public function profiles()
+    public function profile()
     {
-        return $this->hasMany('App\Models\Profile');
+        return $this->hasOne(Profile::class, 'user_id');
     }
 
     public function sold()
     {
         return $this->hasMany('App\Models\Sold');
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

@@ -74,6 +74,7 @@ form {
     /* 縦に配置 */
     align-items: center;
     margin-right: 20px;
+    text-decoration: none;
 }
 
 .act__count {

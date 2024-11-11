@@ -5,8 +5,11 @@
 @endsection
 
 @section('main')
+<x-logo></x-logo>
+
 <div class="register__page">
     <form class="form" action="/register" method="post">
+        @csrf
         <div class="register__form">
             <h1 class="register__ttl">会員登録</h1>
         </div>

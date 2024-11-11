@@ -5,6 +5,7 @@
 @endsection
 
 @section('main')
+<x-black></x-black>
 <div class="address__page">
     <div class="address__ttl">
         <h1 class="ttl">住所の変更</h1>

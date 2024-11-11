@@ -49,4 +49,11 @@ class ItemController extends Controller
 
         return view('detail', ['item' => $item]);
     }
+
+    public function show($id)
+    {
+        // リレーションをロードして商品情報を取得
+        $item = Item::with(['likes', 'comments'])->findOrFail($id);
+        return view('detail', compact('item'));
+    }
 }

@@ -3,6 +3,7 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/sell.css') }}">
 @endsection
+<x-black></x-black>
 
 @section('main')
 <div class="sell__page">
@@ -16,9 +17,11 @@
                     <label for="img_url" class="label img">商品画像</label>
                     <div class="box">
                         <input type="file" class="img__input" name="img_url" id="img_url">
+                        <label for="img_url" class="img__upload-btn">画像を選択する</label>
                     </div>
                 </div>
             </div>
+
 
             <div class="sell__inner">
                 <h2 class="sell__ttl">商品の詳細</h2>
