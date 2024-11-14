@@ -10,8 +10,18 @@ class ItemController extends Controller
 {
     public function index()
     {
+        // 出品されたすべてのアイテム
         $images = Item::all();
-        return view('index', ['images' => $images]);
+
+        // ユーザーが「いいね」したアイテム
+        $likedItems = Item::whereHas('likes', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->get();
+
+        return view('index', [
+            'images' => $images,
+            'likedItems' => $likedItems,
+        ]);
     }
 
     public function sell()

@@ -42,8 +42,11 @@ Route::middleware('auth')->group(function () {
 
     // コメントページ表示
     Route::get('/comment/{item_id}', [LikeController::class, 'showComments'])->name('comment.show');
-    // コメント保存用のルート
     Route::post('/comment/{item_id}', [LikeController::class, 'storeComment'])->name('product.comment.store');
+
+    // いいね機能
+    Route::post('/like/{item_id}', [LikeController::class, 'toggleLike'])->name('like.toggle');
+
 });
 // 詳細ページ
 Route::get('/detail/{id}', [ItemController::class, 'detail'])->name('detail');

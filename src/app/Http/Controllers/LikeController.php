@@ -19,8 +19,6 @@ class LikeController extends Controller
     return view('comment', compact('item', 'comments'));
 }
 
-
-
     // コメント保存用メソッド
     public function storeComment(Request $request, $item_id)
     {
@@ -40,4 +38,26 @@ class LikeController extends Controller
             ->with('success', 'コメントが投稿されました！');
     }
 
+    // いいね機能
+    public function toggleLike(Request $request, $item_id)
+    {
+        $user = Auth::user();
+        $like = Like::where('user_id', $user->id)->where('item_id', $item_id)->first();
+
+        if ($like) {
+            $like->delete();
+            $liked = false;
+        } else {
+            Like::create(['user_id' => $user->id, 'item_id' => $item_id]);
+            $liked = true;
+        }
+
+        // 現在のいいね数を取得
+        $likeCount = Like::where('item_id', $item_id)->count();
+
+        return response()->json([
+            'status' => $liked ? 'liked' : 'unliked',
+            'likeCount' => $likeCount
+        ]);
+    }
 }

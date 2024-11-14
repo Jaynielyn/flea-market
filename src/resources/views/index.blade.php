@@ -8,19 +8,49 @@
 @section('main')
 <div class="index__page">
     <div class="top__page">
-        <a class="recommendation" href="#">おすすめ</a>
-        <a class="top__mypage" href="#">マイリスト</a>
+        <a id="recommendationTab" class="recommendation active" href="#">おすすめ</a>
+        <a id="myListTab" class="top__mypage" href="#">マイリスト</a>
     </div>
 
-    <div class="recommendation">
-        <div class="img__container">
-            @foreach ($images as $image)
-            <a href="/detail/{{ $image->id }}" class="image__link">
-                <img class="post__img" src="{{ \Storage::url($image->img_url) }}">
-            </a>
-            @endforeach
+    <div id="recommendationContent" class="tab-content" style="display: block;">
+        <!-- おすすめのアイテムの内容をここに表示 -->
+        <div class="recommendation">
+            <div class="img__container">
+                @foreach ($images as $image)
+                <a href="/detail/{{ $image->id }}" class="image__link">
+                    <img class="post__img" src="{{ \Storage::url($image->img_url) }}" alt="Image">
+                </a>
+                @endforeach
+            </div>
         </div>
     </div>
-</div>
 
-@endsection
+    <div id="myListContent" class="tab-content" style="display: none;">
+        <!-- マイリスト（いいねしたアイテム）を表示 -->
+        <div class="recommendation">
+            <div class="img__container">
+                @foreach ($likedItems as $item)
+                <a href="/detail/{{ $item->id }}" class="image__link">
+                    <img class="post__img" src="{{ asset('storage/' . $item->img_url) }}" alt="{{ $item->name }}">
+                </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('recommendationTab').addEventListener('click', function() {
+            document.getElementById('recommendationContent').style.display = 'block';
+            document.getElementById('myListContent').style.display = 'none';
+            this.classList.add('active');
+            document.getElementById('myListTab').classList.remove('active');
+        });
+
+        document.getElementById('myListTab').addEventListener('click', function() {
+            document.getElementById('recommendationContent').style.display = 'none';
+            document.getElementById('myListContent').style.display = 'block';
+            this.classList.add('active');
+            document.getElementById('recommendationTab').classList.remove('active');
+        });
+    </script>
+    @endsection

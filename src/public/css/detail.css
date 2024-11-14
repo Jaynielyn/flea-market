@@ -77,9 +77,13 @@ form {
     text-decoration: none;
 }
 
+.act__comment {
+    margin-left: 50px;
+}
+
 .act__count {
-    font-size: 14px;
-    color: #666;
+    font-size: 18px;
+    color: #000000;
     display: block;
     /* アイコンの下に表示 */
     text-align: center;
@@ -120,6 +124,7 @@ form {
 .description__content {
     margin-top: 20px;
     font-size: 16px;
+    white-space: pre-wrap;
 }
 
 .detail__items {
