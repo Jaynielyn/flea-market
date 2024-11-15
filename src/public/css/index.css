@@ -1,27 +1,27 @@
-* {
+.index__page {
+    width: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.index__page {
-    width: 100%;
-    padding: 20px;
-}
-
 .top__page {
     display: flex;
     gap: 40px;
+    width: 100%;
     margin-bottom: 20px;
+    margin-top: 40px;
     border-bottom: 2px solid #5f5f5f;
     padding-bottom: 10px;
 }
 
 .top__page a {
     font-size: 18px;
-    color: #333;
+    font-weight: bold;
+    color: #5f5f5f;
     text-decoration: none;
     padding: 10px;
+    margin-left: 40px;
     transition: color 0.3s, font-weight 0.3s;
 }
 

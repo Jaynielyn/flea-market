@@ -37,6 +37,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <script>
         document.getElementById('recommendationTab').addEventListener('click', function() {
