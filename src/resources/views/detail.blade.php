@@ -88,14 +88,13 @@
                 <div class="detail__sub">
                     <label class="label">カテゴリー：</label>
                     <div class="content__txt">
-                        <p class="category__txt">洋服</p>
-                        <p class="category__txt">メンズ</p>
+                        <p class="category__txt">{{ $item->category ?? 'カテゴリー' }}</p>
                     </div>
                 </div>
                 <div class="detail__sub detail__condition">
                     <label class="label">商品の状態：</label>
                     <div class="content__txt">
-                        <p class="condition__txt">良好</p>
+                        <p class="condition__txt">{{ $item->condition ?? '状態' }}</p>
                     </div>
                 </div>
             </div>

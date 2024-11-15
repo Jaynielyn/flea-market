@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 
@@ -31,26 +33,50 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        //リレーション紐付け
+        // ログインユーザーを取得
         $user = Auth::user();
-        $id = Auth::id();
 
-        //リクエストされた画像ファイルを取得
+        // リクエストされた画像ファイルを保存
         $img = $request->file('img_url');
         $path = $img->store('images', 'public');
 
-        Item::create([
+        $item = Item::create([
             'img_url' => $path,
             'category' => $request->category,
             'condition' => $request->condition,
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
-            'user_id' => Auth::id()
+            'user_id' => $user->id
+        ]);
+
+        // 商品の状態を保存
+        DB::table('conditions')->insert([
+            'item_id' => $item->id,
+            'condition' => $request->condition,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // カテゴリ情報を保存
+        $category = Category::firstOrCreate(
+            ['category' => $request->category],
+            ['created_at' => now(),
+            'updated_at' => now()
+            ]
+        );
+
+        // `category_items` テーブルに商品とカテゴリの関連付けを保存
+        DB::table('category_items')->insert([
+            'item_id' => $item->id,
+            'category_id' => $category->id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         return redirect()->route('index');
     }
+
 
     //詳細ページ
     public function detail($id)
@@ -62,7 +88,6 @@ class ItemController extends Controller
 
     public function show($id)
     {
-        // リレーションをロードして商品情報を取得
         $item = Item::with(['likes', 'comments'])->findOrFail($id);
         return view('detail', compact('item'));
     }

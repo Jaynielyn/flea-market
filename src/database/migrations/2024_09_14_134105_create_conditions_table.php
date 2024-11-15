@@ -15,6 +15,7 @@ class CreateConditionsTable extends Migration
     {
         Schema::create('conditions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('item_id');
             $table->string('condition');
             $table->timestamps();
         });
@@ -27,6 +28,8 @@ class CreateConditionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('conditions');
+        Schema::table('conditions', function (Blueprint $table) {
+            $table->dropColumn('item_id');
+        });
     }
 }
