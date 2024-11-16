@@ -53,3 +53,5 @@ Route::get('/detail/{id}', [ItemController::class, 'detail'])->name('detail');
 
 //検索
 Route::get('/search', [SearchController::class, 'show'])->name('search.show');
+// おすすめアイテム
+Route::get('/recommendations', [SearchController::class, 'recommendations'])->name('recommendations.index');

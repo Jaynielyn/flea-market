@@ -45,7 +45,7 @@
     margin-bottom: 20px;
 }
 
-.act__star,
+.act__like,
 .act__comment {
     display: flex;
     flex-direction: column;

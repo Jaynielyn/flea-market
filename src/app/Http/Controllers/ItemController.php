@@ -12,8 +12,10 @@ class ItemController extends Controller
 {
     public function index()
     {
-        // 出品されたすべてのアイテム
-        $images = Item::all();
+        // いいねが多い順にアイテムを取得
+        $images = Item::withCount('likes')
+        ->orderBy('likes_count', 'desc')
+        ->get();
 
         // ユーザーが「いいね」したアイテム
         $likedItems = Item::whereHas('likes', function ($query) {

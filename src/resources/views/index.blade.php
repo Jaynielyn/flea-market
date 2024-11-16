@@ -13,17 +13,18 @@
     </div>
 
     <div id="recommendationContent" class="tab-content" style="display: block;">
-        <!-- おすすめのアイテムの内容をここに表示 -->
+        <!-- おすすめ -->
         <div class="recommendation">
             <div class="img__container">
                 @foreach ($images as $image)
                 <a href="/detail/{{ $image->id }}" class="image__link">
-                    <img class="post__img" src="{{ \Storage::url($image->img_url) }}" alt="Image">
+                    <img class="post__img" src="{{ \Storage::url($image->img_url) }}" alt="{{ $image->name }}">
                 </a>
                 @endforeach
             </div>
         </div>
     </div>
+
 
     <div id="myListContent" class="tab-content" style="display: none;">
         <!-- マイリスト（いいねしたアイテム）を表示 -->
@@ -39,19 +40,19 @@
     </div>
 </div>
 
-    <script>
-        document.getElementById('recommendationTab').addEventListener('click', function() {
-            document.getElementById('recommendationContent').style.display = 'block';
-            document.getElementById('myListContent').style.display = 'none';
-            this.classList.add('active');
-            document.getElementById('myListTab').classList.remove('active');
-        });
+<script>
+    document.getElementById('recommendationTab').addEventListener('click', function() {
+        document.getElementById('recommendationContent').style.display = 'block';
+        document.getElementById('myListContent').style.display = 'none';
+        this.classList.add('active');
+        document.getElementById('myListTab').classList.remove('active');
+    });
 
-        document.getElementById('myListTab').addEventListener('click', function() {
-            document.getElementById('recommendationContent').style.display = 'none';
-            document.getElementById('myListContent').style.display = 'block';
-            this.classList.add('active');
-            document.getElementById('recommendationTab').classList.remove('active');
-        });
-    </script>
-    @endsection
+    document.getElementById('myListTab').addEventListener('click', function() {
+        document.getElementById('recommendationContent').style.display = 'none';
+        document.getElementById('myListContent').style.display = 'block';
+        this.classList.add('active');
+        document.getElementById('recommendationTab').classList.remove('active');
+    });
+</script>
+@endsection

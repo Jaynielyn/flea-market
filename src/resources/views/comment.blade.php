@@ -17,10 +17,44 @@
             <p class="brand__name">{{ $item->brand ?? 'ブランド名' }}</p>
             <p class="price">¥{{ $item->price ?? '値段' }}</p>
             <div class="detail__act">
-                <div class="act__star">
-                    <img class="stars" src="{{ asset('img/star-regular.svg') }}" width="5%">
-                    <span class="act__count"></span>
+                <div class="act__like">
+                    <!-- いいねボタン -->
+                    <img id="likeButton"
+                        class="stars"
+                        src="{{ auth()->check() && auth()->user()->likes->contains('item_id', $item->id) ? asset('img/star-solid.svg') : asset('img/star-regular.svg') }}"
+                        alt="いいね"
+                        data-item-id="{{ $item->id }}">
+
+                    <!-- いいね数 -->
+                    <span id="likeCount" class="act__count">{{ $item->likes->count() ?? 0 }}</span>
                 </div>
+
+                <script>
+                    document.getElementById('likeButton').addEventListener('click', function() {
+                        const itemId = this.getAttribute('data-item-id');
+
+                        fetch(`/like/${itemId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Content-Type': 'application/json'
+                                },
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                const likeCountElement = document.getElementById('likeCount');
+                                const likeButton = document.getElementById('likeButton');
+                                if (data.status === 'liked') {
+                                    likeButton.src = '{{ asset("img/star-solid.svg") }}';
+                                } else {
+                                    likeButton.src = '{{ asset("img/star-regular.svg") }}';
+                                }
+
+                                likeCountElement.textContent = data.likeCount;
+                            })
+                            .catch(error => console.error('Error:', error)); // エラーのログを表示
+                    });
+                </script>
                 <div class="act__comment">
                     <img class="comments" src="{{ asset('img/comment-regular.svg') }}" width="5%">
                     <span id="commentCount" class="act__count">{{ $item->comments ? $item->comments->count() : 0 }}</span>
