@@ -3,9 +3,9 @@
         <div class="header__logo">
             <a href="/"><img src="{{ asset('img/logo.svg') }}" alt="Sample Logo"></a>
         </div>
-        <div class="header__search">
-            <input class="header__search-input" type="text" placeholder="なにをお探しですか？">
-        </div>
+        <form class="header__search" action="{{ route('search.show') }}" method="GET">
+            <input class="header__search-input" type="text" name="keyword" placeholder="なにをお探しですか？" value="{{ request('keyword') }}">
+        </form>
         <nav class="header__menu">
             <ul class="header__menu-list">
                 @guest

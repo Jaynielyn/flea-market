@@ -7,7 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
-use App\Models\Like;
+use App\Http\Controllers\SearchController;
 use Illuminate\Routing\Route as RoutingRoute;
 
 /*
@@ -50,3 +50,6 @@ Route::middleware('auth')->group(function () {
 });
 // 詳細ページ
 Route::get('/detail/{id}', [ItemController::class, 'detail'])->name('detail');
+
+//検索
+Route::get('/search', [SearchController::class, 'show'])->name('search.show');

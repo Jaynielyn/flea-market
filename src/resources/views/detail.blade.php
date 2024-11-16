@@ -28,11 +28,14 @@
                 <!-- いいねとコメント機能 -->
                 <div class="detail__act">
                     <div class="act__like">
+                        <!-- いいねボタン -->
                         <img id="likeButton"
                             class="stars"
-                            src="{{ Auth::user()->likes->contains('item_id', $item->id) ? asset('img/star-solid.svg') : asset('img/star-regular.svg') }}"
+                            src="{{ auth()->check() && auth()->user()->likes->contains('item_id', $item->id) ? asset('img/star-solid.svg') : asset('img/star-regular.svg') }}"
                             alt="いいね"
                             data-item-id="{{ $item->id }}">
+
+                        <!-- いいね数 -->
                         <span id="likeCount" class="act__count">{{ $item->likes->count() ?? 0 }}</span>
                     </div>
 

@@ -17,7 +17,6 @@ body {
     width: 100%;
 }
 
-/* ヘッダー全体を画面いっぱいに広げる */
 .header__container {
     display: flex;
     align-items: center;
@@ -26,7 +25,6 @@ body {
     padding: 0 30px;
 }
 
-/* ロゴ */
 .header__logo {
     display: flex;
     justify-content: flex-start;
@@ -46,11 +44,10 @@ body {
     margin-top: 13px;
 }
 
-.header__search input {
+.header__search-input {
     height: 40px;
     width: 100%;
     max-width: 500px;
-    /* 画面いっぱいに近い長さにする */
     border-radius: 5px;
     border: none;
 }
@@ -110,7 +107,7 @@ body {
 .sell__link-btn:hover {
     text-decoration: none;
 }
-/* 全体幅いっぱいに広げる */
+
 body,
 html {
     height: 100%;
