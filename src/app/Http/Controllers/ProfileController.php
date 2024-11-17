@@ -38,20 +38,47 @@ class ProfileController extends Controller
 
     public function profile()
     {
+        $user = Auth::user();
+
+        // ユーザーのプロフィール情報が存在するか確認
+        $profile = $user->profile;
+
         $is_image = false;
         if (Storage::disk('local')->exists('public/profile_images/' . Auth::id() . '.jpg')) {
             $is_image = true;
         }
-        return view('profile', ['is_image' => $is_image]);
+
+        // ユーザーのプロフィール情報をビューに渡す
+        return view('profile', [
+            'is_image' => $is_image,
+            'user_name' => $profile ? $profile->user_name : $user->name,
+            'postcode' => $profile ? $profile->postcode : '',
+            'address' => $profile ? $profile->address : '',
+            'building' => $profile ? $profile->building : '',
+        ]);
     }
 
+    // プロフィール情報更新
     public function create(Request $request)
     {
+        $request->validate([
+            'user_name' => 'required|string|max:255',
+            'postcode' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'building' => 'nullable|string|max:255',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2500',
+        ]);
+
+        // ユーザー情報の更新
         $user = Auth::user();
         $id = Auth::id();
 
-        $is_image = $request->photo->storeAs('public/profile_images', Auth::id() . '.jpg');
+        // プロフィール画像が選択された場合のみ保存
+        if ($request->hasFile('photo')) {
+            $path = $request->photo->storeAs('public/profile_images', Auth::id() . '.jpg');
+        }
 
+        // プロフィールの保存
         $profile = [
             'user_name' => $request->user_name,
             'postcode' => $request->postcode,
@@ -60,8 +87,13 @@ class ProfileController extends Controller
             'user_id' => Auth::id()
         ];
 
-        Profile::create($profile);
+        // プロフィールを更新（なければ新規作成）
+        Profile::updateOrCreate(
+            ['user_id' => Auth::id()],
+            $profile
+        );
 
-        return view('mypage', ['is_image' => $is_image]);
+        return redirect()->route('mypage')->with('success', 'プロフィールが更新されました。');
     }
+
 }

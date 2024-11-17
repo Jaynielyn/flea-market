@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     //PROFILE
     Route::get('/mypage', [ProfileController::class, 'mypage'])->name('mypage');
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
-    Route::post('/profile', [ProfileController::class, 'create'])->name('profile_edit');
+    Route::post('/profile', [ProfileController::class, 'create'])->name('profile.create');
 
     //購入
     Route::get('/detail/{id}/purchase', [PurchaseController::class, 'purchase'])->name('purchase');

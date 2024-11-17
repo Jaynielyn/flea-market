@@ -53,6 +53,10 @@
     margin-right: 20px;
 }
 
+.act__comment {
+    margin-left: 40px;
+}
+
 .act__count {
     font-size: 14px;
     color: #666;
