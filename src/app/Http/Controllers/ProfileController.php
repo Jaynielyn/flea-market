@@ -29,13 +29,16 @@ class ProfileController extends Controller
         // ログインユーザーが購入した商品を取得
         $purchasedItems = Item::whereIn('id', Sold::where('user_id', Auth::id())->pluck('item_id'))->get();
 
+        // 現在のユーザーを取得
+        $user = Auth::user();
+
         return view('mypage', [
             'is_image' => $is_image,
             'listedItems' => $listedItems,
             'purchasedItems' => $purchasedItems,
+            'user' => $user, // ユーザー情報を渡す
         ]);
     }
-
     public function profile()
     {
         $user = Auth::user();
@@ -73,12 +76,15 @@ class ProfileController extends Controller
         $user = Auth::user();
         $id = Auth::id();
 
-        // プロフィール画像が選択された場合のみ保存
+        // プロフィール画像が選択された場合
         if ($request->hasFile('photo')) {
+            // 既存の画像を削除
+            Storage::delete('public/profile_images/' . Auth::id() . '.jpg');
+
+            // 新しい画像を保存
             $path = $request->photo->storeAs('public/profile_images', Auth::id() . '.jpg');
         }
 
-        // プロフィールの保存
         $profile = [
             'user_name' => $request->user_name,
             'postcode' => $request->postcode,

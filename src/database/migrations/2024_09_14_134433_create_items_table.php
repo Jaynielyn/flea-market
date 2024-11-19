@@ -23,8 +23,6 @@ class CreateItemsTable extends Migration
             $table->string('category');
             $table->string('condition');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

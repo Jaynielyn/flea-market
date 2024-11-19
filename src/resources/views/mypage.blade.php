@@ -11,12 +11,12 @@
         <div class="mypage__details">
             <div class="left">
                 @if($is_image)
-                <img class="profile__img" src="/storage/profile_images/{{ Auth::id() }}.jpg" alt="プロフィール画像">
+                <img class="profile__img" src="/storage/profile_images/{{ Auth::id() }}.jpg?v={{ time() }}" alt="プロフィール画像">
                 @else
                 <div class="profile__img-placeholder"></div>
                 @endif
                 <span class="username">
-                    <h1>{{ Auth::user()->profile->user_name }}</h1>
+                    <h1>{{ optional(Auth::user()->profile)->user_name ?? 'ゲストユーザー' }}</h1>
                 </span>
             </div>
             <div class="right">

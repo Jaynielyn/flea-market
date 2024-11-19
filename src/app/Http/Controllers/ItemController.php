@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
-
 class ItemController extends Controller
 {
     public function index()

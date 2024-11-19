@@ -13,6 +13,13 @@ class PurchaseController extends Controller
     public function purchase($id)
     {
         $item = Item::find($id);
+        
+        // アイテムが存在しない場合はindexページにリダイレクト
+        if (!$item) {
+            return redirect()->route('index')->with('error', '商品が見つかりませんでした。');
+        }
+
+        session(['item_id' => $id]);
 
         return view('purchase', ['item' => $item]);
     }
@@ -20,7 +27,7 @@ class PurchaseController extends Controller
     public function store(Request $request)
     {
         $userId = Auth::id();
-        $itemId = $request->input('item_id'); // item_idが取得できているか確認
+        $itemId = $request->input('item_id');
 
         if (is_null($itemId)) {
             return back()->withErrors(['error' => 'Item ID is null']);
@@ -28,7 +35,7 @@ class PurchaseController extends Controller
 
         Sold::create([
             'user_id' => $userId,
-            'item_id' => $itemId, // 確実にデータが渡されるよう確認
+            'item_id' => $itemId,
         ]);
 
         return redirect()->route('index')->with('success', 'Purchase completed successfully.');
@@ -37,7 +44,8 @@ class PurchaseController extends Controller
     public function showAddressForm()
     {
         $user = Auth::user();
-        $profile = $user->profile; // ユーザーのプロフィール情報を取得
+        $profile = $user->profile;
+
         return view('address', ['user' => $user, 'profile' => $profile]);
     }
 
@@ -46,7 +54,8 @@ class PurchaseController extends Controller
     {
         $user = Auth::user();
 
-        // バリデーション
+        $itemId = session('item_id');
+
         $request->validate([
             'postcode' => 'required|max:10',
             'address' => 'required|max:255',
@@ -55,7 +64,7 @@ class PurchaseController extends Controller
 
         // プロフィールを更新または作成
         Profile::updateOrCreate(
-            ['user_id' => $user->id], // 条件: ユーザーIDが一致するレコードを探す
+            ['user_id' => $user->id],
             [
                 'postcode' => $request->postcode,
                 'address' => $request->address,
@@ -63,8 +72,7 @@ class PurchaseController extends Controller
             ]
         );
 
-        // 更新完了後、purchase.bladeにリダイレクト
-        return redirect()->route('purchase', ['id' => $user->id])->with('status', '住所が更新されました');
+        return redirect()->route('purchase', ['id' => $itemId])->with('status', '住所情報を確認しました');
     }
 
 

@@ -18,7 +18,7 @@ class CreateProfilesTable extends Migration
             $table->string('user_name');
             $table->integer('postcode');
             $table->string('address');
-            $table->string('building');
+            $table->string('building')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
