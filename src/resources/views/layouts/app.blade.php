@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
+    <script src="https://js.stripe.com/v3/"></script>
+    @stack('head')
     @yield('css')
 </head>
 

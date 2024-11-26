@@ -7,6 +7,18 @@
 
 @section('main')
 <div class="index__page">
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
+
     <div class="top__page">
         <a id="recommendationTab" class="recommendation active" href="#">おすすめ</a>
         <a id="myListTab" class="top__mypage" href="#">マイリスト</a>

@@ -3,12 +3,15 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/purchase.css') }}">
 @endsection
+
 <x-header></x-header>
 
 @section('main')
 <form class="purchase__page" action="{{ route('purchase.store') }}" method="POST">
     @csrf
     <input type="hidden" name="item_id" value="{{ $item->id }}">
+    <input type="hidden" name="payment_method" id="payment-method-input" value="クレジットカード">
+
     <!-- 左側 -->
     <div class="purchase__left">
         <div class="left__top">
@@ -26,7 +29,7 @@
                 <h2>支払い方法</h2>
             </div>
             <div class="items__link">
-                <a href="">変更する</a>
+                <button type="button" id="open-payment-modal">変更する</button>
             </div>
         </div>
 
@@ -39,7 +42,6 @@
             </div>
         </div>
 
-        <!-- この後修正必須 -->
         @if (session('status'))
         <div class="alert alert-success">
             {{ session('status') }}
@@ -62,13 +64,77 @@
                     <p>¥{{ $item->price ?? '値段' }}</p>
                 </div>
                 <div class="box__inner box__bottom-inner">
-                    <label>支払い金額</label>
-                    <p>コンビニ払い</p>
+                    <label>支払い方法</label>
+                    <p id="selected-payment-method">クレジットカード</p>
                 </div>
             </div>
         </div>
-
-        <button class="btn" type="submit">購入する</button>
     </div>
 </form>
+
+<form action="{{ route('checkout') }}" method="POST">
+    @csrf
+    <input type="hidden" name="item_id" value="{{ $item->id }}">
+    <button type="submit" class="btn">購入する</button>
+</form>
+
+
+<!-- 支払い方法モーダル -->
+<div id="paymentModal" class="modal" style="display: none;">
+    <div class="modal__content">
+        <h2>支払い方法を選択</h2>
+        <form id="payment-form">
+            <label>
+                <input type="radio" name="payment_method" value="クレジットカード" checked>
+                クレジットカード
+            </label>
+            <label>
+                <input type="radio" name="payment_method" value="コンビニ">
+                コンビニ
+            </label>
+            <label>
+                <input type="radio" name="payment_method" value="銀行振込">
+                銀行振込
+            </label>
+            <button type="button" id="confirm-payment" class="btn">確定</button>
+            <button type="button" class="close-modal btn">閉じる</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    stripe = Stripe('{{ config("services.stripe.key ") }}');
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('paymentModal');
+        const openModalButton = document.getElementById('open-payment-modal');
+        const closeModalButtons = document.querySelectorAll('.close-modal');
+        const confirmPaymentButton = document.getElementById('confirm-payment');
+        const selectedPaymentDisplay = document.getElementById('selected-payment-method');
+        const paymentMethodInput = document.getElementById('payment-method-input');
+        const paymentOptions = document.querySelectorAll('input[name="payment_method"]');
+
+        // モーダルを開く
+        openModalButton.addEventListener('click', function() {
+            modal.style.display = 'block';
+        });
+
+        // モーダルを閉じる
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+        });
+
+        // 支払い方法を確定する
+        confirmPaymentButton.addEventListener('click', function() {
+            const selectedPayment = document.querySelector('input[name="payment_method"]:checked').value;
+            selectedPaymentDisplay.textContent = selectedPayment;
+            paymentMethodInput.value = selectedPayment;
+
+            // モーダルを閉じる
+            modal.style.display = 'none';
+        });
+    });
+</script>
+
 @endsection

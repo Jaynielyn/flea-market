@@ -8,6 +8,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Routing\Route as RoutingRoute;
 
 /*
@@ -20,7 +21,6 @@ use Illuminate\Routing\Route as RoutingRoute;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', [ItemController::class, 'index'])->name('index');
 
 Route::middleware('auth')->group(function () {
@@ -33,12 +33,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
     Route::post('/profile', [ProfileController::class, 'create'])->name('profile.create');
 
-    //購入
+    // 購入ページ
     Route::get('/detail/{id}/purchase', [PurchaseController::class, 'purchase'])->name('purchase');
     Route::get('/purchase/address', [PurchaseController::class, 'showAddressForm'])->name('purchase.addressForm');
     Route::post('/purchase/update-address', [PurchaseController::class, 'updateAddress'])->name('purchase.updateAddress');
     Route::get('/sold', [PurchaseController::class, 'store'])->name('purchase.store');
     Route::post('/sold', [PurchaseController::class, 'store'])->name('purchase.store');
+
+    //stripe
+    Route::post('/checkout', [PurchaseController::class, 'checkout'])->name('checkout');
+    Route::get('/success', [PurchaseController::class, 'success'])->name('checkout.success');
+    Route::get('/cancel', [PurchaseController::class, 'cancel'])->name('checkout.cancel');
+    Route::post('/webhook', [PurchaseController::class, 'webhook'])->name('checkout.webhook');
+
 
     // コメントページ表示
     Route::get('/comment/{item_id}', [LikeController::class, 'showComments'])->name('comment.show');
@@ -46,7 +53,6 @@ Route::middleware('auth')->group(function () {
 
     // いいね機能
     Route::post('/like/{item_id}', [LikeController::class, 'toggleLike'])->name('like.toggle');
-
 });
 // 詳細ページ
 Route::get('/detail/{id}', [ItemController::class, 'detail'])->name('detail');
