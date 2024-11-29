@@ -75,9 +75,9 @@
 <form action="{{ route('checkout') }}" method="POST">
     @csrf
     <input type="hidden" name="item_id" value="{{ $item->id }}">
+    <input type="hidden" name="payment_method" id="checkout-payment-method" value="クレジットカード">
     <button type="submit" class="btn">購入する</button>
 </form>
-
 
 <!-- 支払い方法モーダル -->
 <div id="paymentModal" class="modal" style="display: none;">
@@ -103,7 +103,6 @@
 </div>
 
 <script>
-    stripe = Stripe('{{ config("services.stripe.key ") }}');
     document.addEventListener('DOMContentLoaded', function() {
         const modal = document.getElementById('paymentModal');
         const openModalButton = document.getElementById('open-payment-modal');
@@ -111,6 +110,7 @@
         const confirmPaymentButton = document.getElementById('confirm-payment');
         const selectedPaymentDisplay = document.getElementById('selected-payment-method');
         const paymentMethodInput = document.getElementById('payment-method-input');
+        const checkoutPaymentMethodInput = document.getElementById('checkout-payment-method');
         const paymentOptions = document.querySelectorAll('input[name="payment_method"]');
 
         // モーダルを開く
@@ -130,11 +130,11 @@
             const selectedPayment = document.querySelector('input[name="payment_method"]:checked').value;
             selectedPaymentDisplay.textContent = selectedPayment;
             paymentMethodInput.value = selectedPayment;
+            checkoutPaymentMethodInput.value = selectedPayment;
 
             // モーダルを閉じる
             modal.style.display = 'none';
         });
     });
 </script>
-
 @endsection

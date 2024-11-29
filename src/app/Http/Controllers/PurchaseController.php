@@ -115,6 +115,16 @@ class PurchaseController extends Controller
 
         // Stripe Checkoutセッション作成
         $session = \Stripe\Checkout\Session::create([
+            // 支払い方法の種類を指定 (カードとコンビニ)
+            'payment_method_types' => ['card', 'konbini'],
+
+            // コンビニ払いのオプション設定
+            'payment_method_options' => [
+                'konbini' => [
+                    'expires_after_days' => 7, // コンビニ払いの有効期限を7日間に設定
+                ],
+            ],
+
             'line_items' => $lineItems,
             'mode' => 'payment',
             'success_url' => route('checkout.success', [], true) . "?session_id={CHECKOUT_SESSION_ID}",
