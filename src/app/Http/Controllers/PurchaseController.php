@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Log;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 
-
 class PurchaseController extends Controller
 {
     public function purchase($id)
@@ -55,7 +54,6 @@ class PurchaseController extends Controller
         return view('address', ['user' => $user, 'profile' => $profile]);
     }
 
-
     public function updateAddress(Request $request)
     {
         $user = Auth::user();
@@ -98,6 +96,21 @@ class PurchaseController extends Controller
         $imageUrl = $item->img_url ? asset('storage/' . $item->img_url) : asset('img/noimage.png');
         Log::info('Image URL: ' . $imageUrl);
 
+        // 顧客IDの取得
+        $customerId = Auth::user()->stripe_customer_id;  // ユーザーのStripe顧客IDを取得
+
+        if (!$customerId) {
+            // 顧客IDがない場合は新しく作成する
+            $customer = \Stripe\Customer::create([
+                'email' => Auth::user()->email,
+                // 必要に応じて他の情報も追加
+            ]);
+            $customerId = $customer->id;
+
+            // 顧客IDをユーザーに保存（後で利用するため）
+            Auth::user()->update(['stripe_customer_id' => $customerId]);
+        }
+
         // Stripe用の商品情報を作成
         $lineItems = [
             [
@@ -115,15 +128,24 @@ class PurchaseController extends Controller
 
         // Stripe Checkoutセッション作成
         $session = \Stripe\Checkout\Session::create([
-            // 支払い方法の種類を指定 (カードとコンビニ)
-            'payment_method_types' => ['card', 'konbini'],
+            // 支払い方法の種類を指定 (カード、コンビニ払い、顧客残高)
+            'payment_method_types' => ['card', 'konbini', 'customer_balance'],
 
             // コンビニ払いのオプション設定
             'payment_method_options' => [
                 'konbini' => [
                     'expires_after_days' => 7, // コンビニ払いの有効期限を7日間に設定
                 ],
+                'customer_balance' => [
+                    'funding_type' => 'bank_transfer',  // 銀行振込を指定
+                    'bank_transfer' => [
+                        'type' => 'jp_bank_transfer', // 日本の銀行振込に設定
+                    ],
+                ],
             ],
+
+            // 顧客IDを設定
+            'customer' => $customerId,  // ここで顧客IDを設定
 
             'line_items' => $lineItems,
             'mode' => 'payment',
@@ -144,6 +166,7 @@ class PurchaseController extends Controller
 
         return redirect($session->url);
     }
+
 
     public function success(Request $request)
     {
@@ -202,7 +225,6 @@ class PurchaseController extends Controller
         }
     }
 
-
     public function cancel()
     {
         return redirect()->route('index')->with('error', '決済がキャンセルされました。');
@@ -247,16 +269,32 @@ class PurchaseController extends Controller
                     $order->save();
 
                     // 購入完了メールを送信するなどの追加処理
-                    Log::info('Payment completed for order: ' . $order->id);
+                    // 例: Mail::to($order->user)->send(new PurchaseCompleted($order));
+
+                    Log::info('Purchase completed for order ID: ' . $order->id);
                 }
                 break;
 
-                // 他のイベントタイプを追加する場合
-            default:
-                Log::info('Received unknown event type: ' . $event->type);
+            case 'checkout.session.async_payment_failed':
+                $session = $event->data->object;
+
+                // 支払い失敗時の処理
+                $order = Sold::where('session_id', $session->id)->first();
+                if ($order && $order->status !== 'failed') {
+                    $order->status = 'failed';
+                    $order->save();
+
+                    Log::error('Payment failed for order ID: ' . $order->id);
+                }
                 break;
+
+                // 他のイベントタイプがあれば追加処理を記述
+                // 例: 支払い成功後の処理等
+
+            default:
+                Log::info('Unhandled event type: ' . $event->type);
         }
 
-        return response('Webhook handled', 200);
+        return response('Webhook received', 200);
     }
 }

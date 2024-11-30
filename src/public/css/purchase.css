@@ -58,16 +58,13 @@
     font-size: 24px;
 }
 
-.items__link {
-    background: none;
-    font-size: 16px;
-    color: blue;
-    border: none;
-    cursor: pointer;
+.blue-link {
+    color: #0073cc !important;
+    text-decoration: none !important;
 }
 
-.items__link:hover {
-    color: darkblue;
+.blue-link:hover {
+    color: darkblue !important;
 }
 
 .payment__methods {
@@ -86,7 +83,6 @@
     margin-right: 10px;
 }
 
-/* モーダル全体 */
 /* モーダル全体 */
 .modal {
     position: fixed;

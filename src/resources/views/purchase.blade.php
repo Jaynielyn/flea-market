@@ -7,46 +7,46 @@
 <x-header></x-header>
 
 @section('main')
-<form class="purchase__page" action="{{ route('purchase.store') }}" method="POST">
-    @csrf
-    <input type="hidden" name="item_id" value="{{ $item->id }}">
-    <input type="hidden" name="payment_method" id="payment-method-input" value="クレジットカード">
-
-    <!-- 左側 -->
+<div class="purchase__page">
     <div class="purchase__left">
-        <div class="left__top">
-            <div class="items__inner">
-                <img class="img" src="{{ $item->img_url ? asset('storage/' . $item->img_url) : asset('img/noimage.png') }}">
+        <form class="purchase__left-form" action="{{ route('purchase.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="item_id" value="{{ $item->id }}">
+            <input type="hidden" name="payment_method" id="payment-method-input" value="クレジットカード">
+            <div class="left__top">
+                <div class="items__inner">
+                    <img class="img" src="{{ $item->img_url ? asset('storage/' . $item->img_url) : asset('img/noimage.png') }}">
+                </div>
+                <div class="items__inner items__name">
+                    <h1 class="product__name">{{ $item->name ?? '商品名' }}</h1>
+                    <p class="price">¥{{ $item->price ?? '値段' }}</p>
+                </div>
             </div>
-            <div class="items__inner items__name">
-                <h1 class="product__name">{{ $item->name ?? '商品名' }}</h1>
-                <p class="price">¥{{ $item->price ?? '値段' }}</p>
-            </div>
-        </div>
 
-        <div class="left__items left__second">
-            <div class="items__ttl">
-                <h2>支払い方法</h2>
+            <div class="left__items left__second">
+                <div class="items__ttl">
+                    <h2>支払い方法</h2>
+                </div>
+                <div class="items__link">
+                    <a href="javascript:void(0);" id="open-payment-modal" class="blue-link">変更する</a>
+                </div>
             </div>
-            <div class="items__link">
-                <button type="button" id="open-payment-modal">変更する</button>
-            </div>
-        </div>
 
-        <div class="left__items left__third">
-            <div class="items__ttl">
-                <h2>配送先</h2>
+            <div class="left__items left__third">
+                <div class="items__ttl">
+                    <h2>配送先</h2>
+                </div>
+                <div class="items__link">
+                    <a href="{{ route('purchase.addressForm') }}" class="blue-link">変更する</a>
+                </div>
             </div>
-            <div class="items__link">
-                <a href="{{ route('purchase.addressForm') }}">変更する</a>
-            </div>
-        </div>
 
-        @if (session('status'))
-        <div class="alert alert-success">
-            {{ session('status') }}
-        </div>
-        @endif
+            @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+            @endif
+        </form>
     </div>
 
     <!-- 右側 -->
@@ -69,15 +69,15 @@
                 </div>
             </div>
         </div>
-    </div>
-</form>
 
-<form action="{{ route('checkout') }}" method="POST">
-    @csrf
-    <input type="hidden" name="item_id" value="{{ $item->id }}">
-    <input type="hidden" name="payment_method" id="checkout-payment-method" value="クレジットカード">
-    <button type="submit" class="btn">購入する</button>
-</form>
+        <form class="checkout__btn" action="{{ route('checkout') }}" method="POST">
+            @csrf
+            <input type="hidden" name="item_id" value="{{ $item->id }}">
+            <input type="hidden" name="payment_method" id="checkout-payment-method" value="クレジットカード">
+            <button type="submit" class="btn">購入する</button>
+        </form>
+    </div>
+</div>
 
 <!-- 支払い方法モーダル -->
 <div id="paymentModal" class="modal" style="display: none;">
