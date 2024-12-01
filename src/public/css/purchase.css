@@ -58,12 +58,12 @@
     font-size: 24px;
 }
 
-.blue-link {
+.blue__link {
     color: #0073cc !important;
     text-decoration: none !important;
 }
 
-.blue-link:hover {
+.blue__link:hover {
     color: darkblue !important;
 }
 
@@ -83,7 +83,6 @@
     margin-right: 10px;
 }
 
-/* モーダル全体 */
 .modal {
     position: fixed;
     top: 50%;
@@ -98,7 +97,6 @@
     height: 100%;
 }
 
-/* モーダルの内容 */
 .modal__content {
     display: flex;
     flex-direction: column;
@@ -113,7 +111,6 @@
     overflow-y: auto;
 }
 
-/* モーダル内のフォームやボタンのスタイル */
 .modal__content form {
     display: flex;
     flex-direction: column;
@@ -140,8 +137,7 @@
     cursor: pointer;
 }
 
-/* モーダルを閉じるボタン */
-.close-modal {
+.close__modal {
     padding: 10px;
     background-color: #f44336;
     color: white;
@@ -150,11 +146,10 @@
     cursor: pointer;
 }
 
-.close-modal:hover {
+.close__modal:hover {
     background-color: #da190b;
 }
 
-/* ボタンをリンクのようにスタイリング */
 #open-payment-modal {
     background: none;
     font-size: 16px;
@@ -166,9 +161,7 @@
 
 #open-payment-modal:hover {
     color: darkblue;
-    /* ホバー時に色を暗く */
     text-decoration: underline;
-    /* 下線を維持 */
 }
 
 /* 右側 */
@@ -213,4 +206,47 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .img {
+        width: 80%;
+        height: auto;
+    }
+
+    .purchase__right {
+        margin-right: 30px;
+    }
+
+    .box {
+        width: 100%;
+        margin: 0 auto;
+        margin-left: 15px;
+        box-sizing: border-box;
+    }
+
+    .box__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 10px;
+        width: 100%;
+        overflow: hidden;
+        margin-left: -20px;
+    }
+
+    .product__name {
+        font-size: 20px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .price {
+        font-size: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }

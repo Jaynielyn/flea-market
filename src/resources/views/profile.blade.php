@@ -20,33 +20,47 @@
 
             <label class="pic__choose-label" for="photo">画像を選択する</label>
             <input class="pic__choose" type="file" name="photo" id="photo" onchange="previewImage(event)">
+            @error('photo')
+            <div class="error">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="profile__items">
             <label class="profile__label" for="user_name">ユーザー名</label>
             <input class="profile__input" type="text" name="user_name" id="user_name" value="{{ old('user_name', $user_name) }}">
+            @error('user_name')
+            <div class="error">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="profile__items">
             <label class="profile__label" for="postcode">郵便番号</label>
             <input class="profile__input" type="text" name="postcode" id="postcode" value="{{ old('postcode', $postcode) }}">
+            @error('postcode')
+            <div class="error">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="profile__items">
             <label class="profile__label" for="address">住所</label>
             <input class="profile__input" type="text" name="address" id="address" value="{{ old('address', $address) }}">
+            @error('address')
+            <div class="error">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="profile__items">
             <label class="profile__label" for="building">建物名</label>
             <input class="profile__input" type="text" name="building" id="building" value="{{ old('building', $building) }}">
+            @error('building')
+            <div class="error">{{ $message }}</div>
+            @enderror
         </div>
 
         <button class="profile__submit-btn" type="submit">更新する</button>
     </form>
 </div>
 
-<!-- 画像を選択した時のプレビュー -->
 <script>
     function previewImage(event) {
         const file = event.target.files[0];

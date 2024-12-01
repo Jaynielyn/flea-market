@@ -100,3 +100,10 @@
     width: 95%;
     align-self: center;
 }
+
+.error {
+    margin-top: 8px;
+    font-weight: bold;
+    font-size: 18px;
+    color: red;
+}

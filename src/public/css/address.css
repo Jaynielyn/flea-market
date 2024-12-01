@@ -46,3 +46,10 @@
     border: none;
     border-radius: 5px;
 }
+
+.error {
+    margin-top: 8px;
+    font-weight: bold;
+    font-size: 18px;
+    color: red;
+}

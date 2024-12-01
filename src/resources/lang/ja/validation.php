@@ -146,5 +146,19 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'email' => 'メールアドレス',
+        'password' => 'パスワード',
+        'img_url' => '商品画像',
+        'category' => 'カテゴリー',
+        'condition' => '商品の状態',
+        'name' => '商品名',
+        'description' => '商品説明',
+        'price' => '販売価格',
+        'user_name' => 'ユーザー名',
+        'postcode' => '郵便番号',
+        'address' => '住所',
+        'building' => '建物名',
+        'photo' => 'プロフィール画像',
+    ],
 ];

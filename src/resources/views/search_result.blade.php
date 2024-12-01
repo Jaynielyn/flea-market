@@ -6,7 +6,7 @@
 <x-header></x-header>
 
 @section('main')
-<div class="search-results">
+<div class="search__results">
     @if ($items->isEmpty())
     <p>該当する商品が見つかりませんでした。</p>
     @else

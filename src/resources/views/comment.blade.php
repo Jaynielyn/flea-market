@@ -18,14 +18,11 @@
             <p class="price">¥{{ $item->price ?? '値段' }}</p>
             <div class="detail__act">
                 <div class="act__like">
-                    <!-- いいねボタン -->
                     <img id="likeButton"
                         class="stars"
                         src="{{ auth()->check() && auth()->user()->likes->contains('item_id', $item->id) ? asset('img/star-solid.svg') : asset('img/star-regular.svg') }}"
                         alt="いいね"
                         data-item-id="{{ $item->id }}">
-
-                    <!-- いいね数 -->
                     <span id="likeCount" class="act__count">{{ $item->likes->count() ?? 0 }}</span>
                 </div>
 
@@ -52,7 +49,7 @@
 
                                 likeCountElement.textContent = data.likeCount;
                             })
-                            .catch(error => console.error('Error:', error)); // エラーのログを表示
+                            .catch(error => console.error('Error:', error));
                     });
                 </script>
                 <div class="act__comment">
@@ -66,7 +63,6 @@
             <ul class="comment__list">
                 @foreach($comments as $comment)
                 @if($comment->user_id === auth()->id())
-                <!-- 自分のコメント -->
                 <li class="my__comment section">
                     <div class="comment__info my__comment-info">
                         <span class="user__name">{{ $comment->user->profile->user_name }}</span>
@@ -75,7 +71,6 @@
                     <span class="my__comment-text">{{ $comment->comment }}</span>
                 </li>
                 @else
-                <!-- 他のユーザーのコメント -->
                 <li class="other__comment section">
                     <div class="comment__info other__comment-info">
                         <img src="/storage/profile_images/{{ $comment->user->id }}.jpg" alt="プロフィール画像" class="profile__img" width="5%">
@@ -87,8 +82,6 @@
                 @endforeach
             </ul>
 
-
-            <!-- コメント投稿フォーム -->
             <form class="comment__form" action="{{ route('product.comment.store', ['item_id' => $item->id]) }}" method="POST">
                 @csrf
                 <label class="comment__label" for="comment">商品へのコメント</label>

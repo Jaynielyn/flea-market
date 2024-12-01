@@ -9,14 +9,12 @@
 <div class="detail__page">
     <form method="get">
         @csrf
-        <!-- 画像 -->
         <div class="detail__form form__left">
             <div class="detail__image">
                 <img class="detail__img" src="{{ $item->img_url ? asset('storage/' . $item->img_url) : asset('img/noimage.png') }}">
             </div>
         </div>
 
-        <!-- 商品名と情報 -->
         <div class="detail__form form__right">
             <div class="detail__items">
                 <div class="detail__ttl">
@@ -25,17 +23,13 @@
                     <p class="price">¥{{ $item->price ?? '値段' }}</p>
                 </div>
 
-                <!-- いいねとコメント機能 -->
                 <div class="detail__act">
                     <div class="act__like">
-                        <!-- いいねボタン -->
                         <img id="likeButton"
                             class="stars"
                             src="{{ auth()->check() && auth()->user()->likes->contains('item_id', $item->id) ? asset('img/star-solid.svg') : asset('img/star-regular.svg') }}"
                             alt="いいね"
                             data-item-id="{{ $item->id }}">
-
-                        <!-- いいね数 -->
                         <span id="likeCount" class="act__count">{{ $item->likes->count() ?? 0 }}</span>
                     </div>
 
@@ -62,11 +56,10 @@
 
                                     likeCountElement.textContent = data.likeCount;
                                 })
-                                .catch(error => console.error('Error:', error)); // エラーのログを表示
+                                .catch(error => console.error('Error:', error));
                         });
                     </script>
 
-                    <!-- コメント機能 -->
                     <a href="{{ route('comment.show', ['item_id' => $item->id]) }}" class="act__comment">
                         <img class="comments" src="{{ asset('img/comment-regular.svg') }}" alt="コメント">
                         <span id="commentCount" class="act__count">{{ $item->comments ? $item->comments->count() : 0 }}</span>
@@ -78,14 +71,12 @@
                 <a class="btn" href="{{ route('purchase', ['id' => $item->id]) }}">購入する</a>
             </div>
 
-            <!-- 説明 -->
             <div class="detail__items detail__info">
                 <h2 class="section__title">商品説明</h2>
                 <p class="detail__color">カラー：<span>グレー</span></p>
                 <p class="description__content">{{ $item->description ?? '商品の状態は良好です。傷もありません。' }}</p>
             </div>
 
-            <!-- 情報 -->
             <div class="detail__items detail__info">
                 <h2 class="section__title">商品の情報</h2>
                 <div class="detail__sub">

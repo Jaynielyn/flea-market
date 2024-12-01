@@ -7,13 +7,12 @@
 
 @section('main')
 <div class="index__page">
-   <div class="top__page">
+    <div class="top__page">
         <a id="recommendationTab" class="recommendation active" href="#">おすすめ</a>
         <a id="myListTab" class="top__mypage" href="#">マイリスト</a>
     </div>
 
-    <div id="recommendationContent" class="tab-content" style="display: block;">
-        <!-- おすすめ -->
+    <div id="recommendationContent" class="tab__content" style="display: block;">
         <div class="recommendation">
             <div class="img__container">
                 @foreach ($images as $image)
@@ -26,8 +25,7 @@
     </div>
 
 
-    <div id="myListContent" class="tab-content" style="display: none;">
-        <!-- マイリスト（いいねしたアイテム）を表示 -->
+    <div id="myListContent" class="tab__content" style="display: none;">
         <div class="recommendation">
             <div class="img__container">
                 @foreach ($likedItems as $item)

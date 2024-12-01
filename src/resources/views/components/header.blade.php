@@ -3,9 +3,15 @@
         <div class="header__logo">
             <a href="/"><img src="{{ asset('img/logo.svg') }}" alt="Sample Logo"></a>
         </div>
-        <form class="header__search" action="{{ route('search.show') }}" method="GET">
-            <input class="header__search-input" type="text" name="keyword" placeholder="なにをお探しですか？" value="{{ request('keyword') }}">
-        </form>
+        <div class="header__search-and-menu">
+            <form class="header__search" action="{{ route('search.show') }}" method="GET">
+                <input class="header__search-input" type="text" name="keyword" placeholder="なにをお探しですか？" value="{{ request('keyword') }}">
+            </form>
+            <!-- ハンバーガーメニュー-->
+            <div id="menu-toggle" class="header__menu-toggle">
+                &#9776;
+            </div>
+        </div>
         <nav class="header__menu">
             <ul class="header__menu-list">
                 @guest
@@ -28,3 +34,16 @@
         </nav>
     </div>
 </header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.header__menu-toggle');
+        const menu = document.querySelector('.header__menu');
+
+        if (menuToggle && menu) {
+            menuToggle.addEventListener('click', function() {
+                menu.classList.toggle('header__menu--active');
+            });
+        }
+    });
+</script>

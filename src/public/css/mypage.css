@@ -31,7 +31,6 @@
     gap: 20px;
 }
 
-/* プロフィール画像 */
 .profile__img,
 .profile__img-placeholder {
     width: 150px;
@@ -66,7 +65,6 @@
     cursor: pointer;
 }
 
-/* タブ */
 .mypage__tabs {
     display: flex;
     justify-content: flex-start;
@@ -96,7 +94,7 @@
     color: #FF0000;
 }
 
-.product-item {
+.product__item {
     margin-left: 60px;
 }
 
@@ -123,4 +121,19 @@
 
 .image__link:hover .post__img {
     transform: scale(1.05);
+}
+
+@media screen and (max-width: 768px) {
+    .img__container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+        margin-right: 40px;
+    }
+
+    .post__img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 8px;
+    }
 }

@@ -17,11 +17,19 @@
         <div class="register__form form__item">
             <label class="register__form-label">メールアドレス</label>
             <input class="register__input input__email" type="email" name="email" value="{{ old('email') }}" />
+
+            @if ($errors->has('email'))
+            <div class="error">{{ $errors->first('email') }}</div>
+            @endif
         </div>
 
         <div class="register__form form__item">
             <label class="register__form-label">パスワード</label>
             <input class="register__input input__pass" type="password" name="password" />
+
+            @if ($errors->has('password'))
+            <div class="error">{{ $errors->first('password') }}</div>
+            @endif
         </div>
 
         <div class="register__form form__btn">

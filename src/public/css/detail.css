@@ -38,7 +38,6 @@ form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* 上下に均等配置 */
     padding: 40px;
     background-color: #ffffff;
 }
@@ -71,7 +70,6 @@ form {
 .act__comment {
     display: flex;
     flex-direction: column;
-    /* 縦に配置 */
     align-items: center;
     margin-right: 20px;
     text-decoration: none;
@@ -85,7 +83,6 @@ form {
     font-size: 18px;
     color: #000000;
     display: block;
-    /* アイコンの下に表示 */
     text-align: center;
 }
 

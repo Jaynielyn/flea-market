@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
+use Illuminate\Support\Facades\Validator;
 class ItemController extends Controller
 {
     public function index()
@@ -34,7 +35,15 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        // ログインユーザーを取得
+        $validated = $request->validate([
+            'img_url' => ['required', 'image', 'mimes:jpeg,png,jpg,gif'],
+            'category' => ['required', 'string', 'max:255'],
+            'condition' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'price' => ['required', 'numeric', 'min:1'],
+        ]);
+
         $user = Auth::user();
 
         // リクエストされた画像ファイルを保存

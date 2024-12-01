@@ -53,3 +53,10 @@
     height: 60px;
     width: 558px;
 }
+
+.error {
+    margin-top: 8px;
+    font-weight: bold;
+    font-size: 18px;
+    color: red;
+}

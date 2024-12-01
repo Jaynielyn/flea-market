@@ -31,11 +31,9 @@
     </div>
 
     <div class="mypage__bottom">
-        <!-- 出品した商品リスト -->
         <div id="listed-items" class="img__container active">
             @foreach($listedItems as $item)
-            <div class="product-item">
-                <!-- 商品画像をクリックで詳細ページへ遷移 -->
+            <div class="product__item">
                 <a href="{{ route('detail', ['id' => $item->id]) }}" class="image__link">
                     <img src="{{ asset('storage/' . $item->img_url) }}" alt="{{ $item->name }}" class="post__img">
                 </a>
@@ -43,11 +41,9 @@
             @endforeach
         </div>
 
-        <!-- 購入した商品リスト -->
         <div id="purchased-items" class="img__container">
             @foreach($purchasedItems as $item)
-            <div class="product-item">
-                <!-- 商品画像をクリックで詳細ページへ遷移 -->
+            <div class="product__item">
                 <a href="{{ route('detail', ['id' => $item->id]) }}" class="image__link">
                     <img src="{{ asset('storage/' . $item->img_url) }}" alt="{{ $item->name }}" class="post__img">
                 </a>
@@ -55,19 +51,14 @@
             @endforeach
         </div>
     </div>
-
 </div>
 
-
-<!-- タブの切り替え用 JavaScript -->
 <script>
     document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', function() {
-            // タブの切り替え
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
 
-            // コンテンツの切り替え
             const target = tab.getAttribute('data-target');
             document.querySelectorAll('.img__container').forEach(container => {
                 container.classList.remove('active');
@@ -76,18 +67,4 @@
         });
     });
 </script>
-
-<style>
-    /* タブコンテンツの切り替えをサポートするスタイル */
-    .product-grid {
-        display: none;
-    }
-
-    .product-grid.active {
-        display: grid;
-    }
-</style>
-
-</div>
-
 @endsection

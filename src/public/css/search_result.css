@@ -19,7 +19,6 @@
     transform: scale(1.05);
 }
 
-/* Responsive design for smaller screens */
 @media (max-width: 1024px) {
     .img__container {
         grid-template-columns: repeat(3, 1fr);

@@ -28,7 +28,7 @@
                     <h2>支払い方法</h2>
                 </div>
                 <div class="items__link">
-                    <a href="javascript:void(0);" id="open-payment-modal" class="blue-link">変更する</a>
+                    <a href="javascript:void(0);" id="open-payment-modal" class="blue__link">変更する</a>
                 </div>
             </div>
 
@@ -37,7 +37,7 @@
                     <h2>配送先</h2>
                 </div>
                 <div class="items__link">
-                    <a href="{{ route('purchase.addressForm') }}" class="blue-link">変更する</a>
+                    <a href="{{ route('purchase.addressForm') }}" class="blue__link">変更する</a>
                 </div>
             </div>
 
@@ -97,7 +97,7 @@
                 銀行振込
             </label>
             <button type="button" id="confirm-payment" class="btn">確定</button>
-            <button type="button" class="close-modal btn">閉じる</button>
+            <button type="button" class="close__modal btn">閉じる</button>
         </form>
     </div>
 </div>
@@ -106,33 +106,29 @@
     document.addEventListener('DOMContentLoaded', function() {
         const modal = document.getElementById('paymentModal');
         const openModalButton = document.getElementById('open-payment-modal');
-        const closeModalButtons = document.querySelectorAll('.close-modal');
+        const closeModalButtons = document.querySelectorAll('.close__modal');
         const confirmPaymentButton = document.getElementById('confirm-payment');
         const selectedPaymentDisplay = document.getElementById('selected-payment-method');
         const paymentMethodInput = document.getElementById('payment-method-input');
         const checkoutPaymentMethodInput = document.getElementById('checkout-payment-method');
         const paymentOptions = document.querySelectorAll('input[name="payment_method"]');
 
-        // モーダルを開く
         openModalButton.addEventListener('click', function() {
             modal.style.display = 'block';
         });
 
-        // モーダルを閉じる
         closeModalButtons.forEach(button => {
             button.addEventListener('click', function() {
                 modal.style.display = 'none';
             });
         });
 
-        // 支払い方法を確定する
         confirmPaymentButton.addEventListener('click', function() {
             const selectedPayment = document.querySelector('input[name="payment_method"]:checked').value;
             selectedPaymentDisplay.textContent = selectedPayment;
             paymentMethodInput.value = selectedPayment;
             checkoutPaymentMethodInput.value = selectedPayment;
 
-            // モーダルを閉じる
             modal.style.display = 'none';
         });
     });

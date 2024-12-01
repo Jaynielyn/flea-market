@@ -8,6 +8,7 @@ use App\Models\Profile;
 use App\Models\Sold;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 

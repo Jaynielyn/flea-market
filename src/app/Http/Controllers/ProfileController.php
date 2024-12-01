@@ -10,8 +10,7 @@ use App\Models\Sold;
 use App\Models\User;
 use App\Http\Requests\ProfileRequest;
 use Illuminate\Support\Facades\Storage;
-
-
+use Illuminate\Support\Facades\Validator;
 
 
 class ProfileController extends Controller
