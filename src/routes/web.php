@@ -9,6 +9,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Routing\Route as RoutingRoute;
 
 /*
@@ -56,8 +57,22 @@ Route::middleware('auth')->group(function () {
 });
 // 詳細ページ
 Route::get('/detail/{id}', [ItemController::class, 'detail'])->name('detail');
-
 //検索
 Route::get('/search', [SearchController::class, 'show'])->name('search.show');
 // おすすめアイテム
 Route::get('/recommendations', [SearchController::class, 'recommendations'])->name('recommendations.index');
+
+// 管理者用認証
+Route::prefix('admin')->group(function () {
+    Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/login', [AdminController::class, 'login'])->name('admin.login.submit');
+
+    Route::get('/register', [AdminController::class, 'showRegisterForm'])->name('admin.register');
+    Route::post('/register', [AdminController::class, 'register'])->name('admin.register.submit');
+
+    // 認証後
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    });
+});

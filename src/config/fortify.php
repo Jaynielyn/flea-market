@@ -2,6 +2,7 @@
 
 use App\Providers\RouteServiceProvider;
 use Laravel\Fortify\Features;
+use Illuminate\Support\Facades\Auth;
 
 return [
 
@@ -16,7 +17,7 @@ return [
     |
     */
 
-    'guard' => 'web',
+    'guard' => env('FORTIFY_GUARD', 'web'),
 
     /*
     |--------------------------------------------------------------------------
@@ -74,7 +75,10 @@ return [
     |
     */
 
-    'home' => RouteServiceProvider::HOME,
+    'home' => function () {
+        return Auth::guard('admin')->check() ? RouteServiceProvider::ADMIN_HOME : RouteServiceProvider::HOME;
+    },
+
 
     /*
     |--------------------------------------------------------------------------
