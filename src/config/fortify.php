@@ -75,10 +75,7 @@ return [
     |
     */
 
-    'home' => function () {
-        return Auth::guard('admin')->check() ? RouteServiceProvider::ADMIN_HOME : RouteServiceProvider::HOME;
-    },
-
+    'home' => App\Providers\RouteServiceProvider::HOME,
 
     /*
     |--------------------------------------------------------------------------

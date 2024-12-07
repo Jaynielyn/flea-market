@@ -13,6 +13,17 @@
             <h1 class="login__ttl">管理画面<br>ログイン</h1>
         </div>
 
+        <!-- 全体のエラーメッセージ -->
+        @if ($errors->any())
+        <div class="error">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
         <div class="login__form form__item">
             <label class="login__form-label" for="name">名前</label>
             <input class="login__input input__name" id="name" type="text" name="name" required autofocus>
@@ -45,7 +56,7 @@
         </div>
 
         <div class="login__form login__link">
-            <a class="link" href="http://localhost/admin/register">会員登録はこちら</a>
+            <a class="link" href="{{ route('admin.register') }}">会員登録はこちら</a>
         </div>
     </form>
 </div>

@@ -10,7 +10,9 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminUserController;
 use Illuminate\Routing\Route as RoutingRoute;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +40,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/detail/{id}/purchase', [PurchaseController::class, 'purchase'])->name('purchase');
     Route::get('/purchase/address', [PurchaseController::class, 'showAddressForm'])->name('purchase.addressForm');
     Route::post('/purchase/update-address', [PurchaseController::class, 'updateAddress'])->name('purchase.updateAddress');
-    Route::get('/sold', [PurchaseController::class, 'store'])->name('purchase.store');
     Route::post('/sold', [PurchaseController::class, 'store'])->name('purchase.store');
 
     //stripe
@@ -72,7 +73,16 @@ Route::prefix('admin')->group(function () {
 
     // 認証後
     Route::middleware('auth:admin')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+        // ユーザー管理
+        Route::get('/dashboard', [AdminUserController::class, 'dashboard'])->name('admin.dashboard');
+        Route::delete('/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+
+        // メール作成画面表示 (GET)
+        Route::get('/users/{id}/send-mail-form', [AdminUserController::class, 'sendMailForm'])->name('admin.users.sendMailForm');
+
+        // メール送信処理 (POST)
+        Route::post('/users/{id}/send-mail', [AdminUserController::class, 'sendMail'])->name('admin.users.sendMail');
     });
 });

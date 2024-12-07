@@ -6,6 +6,7 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
 class AdminController extends Controller
@@ -57,12 +58,6 @@ class AdminController extends Controller
         Auth::guard('admin')->login($admin);
 
         return redirect()->route('admin.dashboard');
-    }
-
-    // ダッシュボード画面
-    public function dashboard()
-    {
-        return view('admin.index');
     }
 
     // ログアウト処理
