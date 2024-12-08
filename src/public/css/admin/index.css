@@ -32,6 +32,10 @@ th {
     color: #555;
 }
 
+td a {
+    text-decoration: none;
+}
+
 button {
     padding: 5px 10px;
     color: #fff;
@@ -40,6 +44,11 @@ button {
     cursor: pointer;
     font-size: 14px;
     width: 70px;
+}
+
+.admin__form-td {
+    display: flex;
+    justify-content: space-between;
 }
 
 .delete__btn {
@@ -85,4 +94,44 @@ button {
 .pagination li a:hover {
     background-color: #007bff;
     color: white;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    table {
+        margin-top: 40px;
+    }
+
+    th,
+    td {
+        font-size: 16px;
+        padding: 15px;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 5px 8px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+    }
+
+    .pagination li {
+        margin: 5px 0;
+    }
+
+    .pagination li a,
+    .pagination li span {
+        font-size: 14px;
+        padding: 5px 8px;
+    }
 }

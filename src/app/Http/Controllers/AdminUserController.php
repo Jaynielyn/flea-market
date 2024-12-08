@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use App\Models\Item;
+use App\Models\Comment;
 
 class AdminUserController extends Controller
 {
@@ -55,6 +57,35 @@ class AdminUserController extends Controller
         });
 
         return redirect()->route('admin.dashboard')->with('success', 'メールを送信しました！');
+    }
+
+    public function showUserComments(User $user)
+    {
+        // ユーザーがコメントした商品の画像を取得
+        $images = $user->comments()->with('item')->get()->pluck('item')->unique('id');
+
+        return view('admin.item_comments', compact('user', 'images'));
+    }
+
+    public function showItemDetails($itemId)
+    {
+        // 商品を取得
+        $item = Item::findOrFail($itemId);
+
+        // 商品に関連するコメントを取得
+        $comments = $item->comments;
+
+        return view('admin.item_details', compact('item', 'comments'));
+    }
+
+    public function destroyComment($commentId)
+    {
+        $comment = Comment::findOrFail($commentId);
+
+        // コメントを削除
+        $comment->delete();
+
+        return redirect()->back()->with('success', 'コメントを削除しました。');
     }
 
 }

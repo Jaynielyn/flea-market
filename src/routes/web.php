@@ -84,5 +84,10 @@ Route::prefix('admin')->group(function () {
 
         // メール送信処理 (POST)
         Route::post('/users/{id}/send-mail', [AdminUserController::class, 'sendMail'])->name('admin.users.sendMail');
+
+        // コメントした商品の表示
+        Route::get('/users/{user}/comments', [AdminUserController::class, 'showUserComments'])->name('admin.users.comments');
+        Route::get('/admin/items/{item}/details', [AdminUserController::class, 'showItemDetails'])->name('admin.items.details');
+        Route::delete('/admin/comments/{comment}', [AdminUserController::class, 'destroyComment'])->name('admin.comments.destroy');
     });
 });

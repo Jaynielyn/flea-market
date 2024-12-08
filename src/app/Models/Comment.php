@@ -23,6 +23,6 @@ class Comment extends Model
 
     public function profile()
     {
-        return $this->user->profile();
+        return $this->user->profile;
     }
 }
