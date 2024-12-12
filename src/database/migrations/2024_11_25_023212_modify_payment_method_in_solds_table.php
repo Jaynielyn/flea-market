@@ -14,7 +14,10 @@ class ModifyPaymentMethodInSoldsTable extends Migration
     public function up()
     {
         Schema::table('solds', function (Blueprint $table) {
-            $table->string('payment_method')->default('クレジットカード')->change();
+            // もし 'payment_method' カラムが存在しない場合は追加
+            if (!Schema::hasColumn('solds', 'payment_method')) {
+                $table->string('payment_method')->default('クレジットカード');
+            }
         });
     }
 
@@ -26,7 +29,8 @@ class ModifyPaymentMethodInSoldsTable extends Migration
     public function down()
     {
         Schema::table('solds', function (Blueprint $table) {
-            $table->string('payment_method')->nullable()->change();
+            // 'payment_method' カラムを削除
+            $table->dropColumn('payment_method');
         });
     }
 }

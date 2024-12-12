@@ -13,7 +13,7 @@
     <div class="img__container">
         @foreach ($items as $item)
         <a href="/detail/{{ $item->id }}" class="image__link">
-            <img class="post__img" src="{{ asset('storage/' . $item->img_url) }}" alt="{{ $item->name }}">
+            <img class="post__img" src="{{ \Storage::disk('s3')->url($item->img_url) }}" alt="{{ $item->name }}">
         </a>
         @endforeach
     </div>

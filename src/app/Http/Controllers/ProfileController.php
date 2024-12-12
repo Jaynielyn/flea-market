@@ -18,7 +18,7 @@ class ProfileController extends Controller
     public function mypage()
     {
         $is_image = false;
-        if (Storage::disk('local')->exists('public/profile_images/' . Auth::id() . '.jpg')) {
+        if (Storage::disk('s3')->exists('profile_images/' . Auth::id() . '.jpg')) {
             $is_image = true;
         }
 
@@ -38,6 +38,7 @@ class ProfileController extends Controller
             'user' => $user, // ユーザー情報を渡す
         ]);
     }
+
     public function profile()
     {
         $user = Auth::user();
@@ -46,11 +47,10 @@ class ProfileController extends Controller
         $profile = $user->profile;
 
         $is_image = false;
-        if (Storage::disk('local')->exists('public/profile_images/' . Auth::id() . '.jpg')) {
+        if (Storage::disk('s3')->exists('profile_images/' . Auth::id() . '.jpg')) {
             $is_image = true;
         }
 
-        // ユーザーのプロフィール情報をビューに渡す
         return view('profile', [
             'is_image' => $is_image,
             'user_name' => $profile ? $profile->user_name : $user->name,
@@ -60,7 +60,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    // プロフィール情報更新
     public function create(Request $request)
     {
         $request->validate([
@@ -77,11 +76,18 @@ class ProfileController extends Controller
 
         // プロフィール画像が選択された場合
         if ($request->hasFile('photo')) {
-            // 既存の画像を削除
-            Storage::delete('public/profile_images/' . Auth::id() . '.jpg');
+            // 既存の画像を削除（S3上の画像を削除）
+            Storage::disk('s3')->delete('profile_images/' . Auth::id() . '.jpg');
 
-            // 新しい画像を保存
-            $path = $request->photo->storeAs('public/profile_images', Auth::id() . '.jpg');
+            // 新しい画像をS3に保存（公開アクセス付き）
+            $path = $request->photo->storeAs(
+                'profile_images',
+                Auth::id() . '.jpg',
+                [
+                    'disk' => 's3',
+                    'visibility' => 'public', // 公開アクセスを許可
+                ]
+            );
         }
 
         $profile = [

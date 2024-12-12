@@ -11,7 +11,7 @@
         @csrf
         <div class="detail__form form__left">
             <div class="detail__image">
-                <img class="detail__img" src="{{ $item->img_url ? asset('storage/' . $item->img_url) : asset('img/noimage.png') }}">
+                <img class="detail__img" src="{{ $item->img_url ? Storage::disk('s3')->url($item->img_url) : asset('img/noimage.png') }}">
             </div>
         </div>
 
@@ -73,7 +73,6 @@
 
             <div class="detail__items detail__info">
                 <h2 class="section__title">商品説明</h2>
-                <p class="detail__color">カラー：<span>グレー</span></p>
                 <p class="description__content">{{ $item->description ?? '商品の状態は良好です。傷もありません。' }}</p>
             </div>
 

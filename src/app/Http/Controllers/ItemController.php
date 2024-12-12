@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 class ItemController extends Controller
 {
     public function index()
@@ -35,6 +36,7 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
+        // バリデーション
         $validated = $request->validate([
             'img_url' => ['required', 'image', 'mimes:jpeg,png,jpg,gif'],
             'category' => ['required', 'string', 'max:255'],
@@ -46,12 +48,13 @@ class ItemController extends Controller
 
         $user = Auth::user();
 
-        // リクエストされた画像ファイルを保存
+        // リクエストされた画像ファイルをS3に保存
         $img = $request->file('img_url');
-        $path = $img->store('images', 'public');
+        $path = $img->store('images', 's3');  // S3ディスクに保存
 
+        // アイテムの保存
         $item = Item::create([
-            'img_url' => $path,
+            'img_url' => $path,  // S3のパス
             'category' => $request->category,
             'condition' => $request->condition,
             'name' => $request->name,
@@ -71,9 +74,7 @@ class ItemController extends Controller
         // カテゴリ情報を保存
         $category = Category::firstOrCreate(
             ['category' => $request->category],
-            ['created_at' => now(),
-            'updated_at' => now()
-            ]
+            ['created_at' => now(), 'updated_at' => now()]
         );
 
         // `category_items` テーブルに商品とカテゴリの関連付けを保存
@@ -87,13 +88,15 @@ class ItemController extends Controller
         return redirect()->route('index');
     }
 
-
     //詳細ページ
     public function detail($id)
     {
         $item = Item::find($id);
+        // S3のURLを取得
+        $imageUrl = Storage::disk('s3')->url($item->img_url);
+    
 
-        return view('detail', ['item' => $item]);
+        return view('detail', compact('item', 'imageUrl'));
     }
 
     public function show($id)

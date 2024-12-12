@@ -13,7 +13,7 @@
         <div class="img__container">
             @forelse ($images as $image)
             <a href="{{ route('admin.items.details', ['item' => $image->id]) }}" class="image__link">
-                <img class="post__img" src="{{ \Storage::url($image->img_url) }}" alt="{{ $image->name }}">
+                <img class="post__img" src="{{ $image->img_url }}" alt="{{ $image->name }}">
             </a>
             @empty
             <p>コメントした商品はありません。</p>

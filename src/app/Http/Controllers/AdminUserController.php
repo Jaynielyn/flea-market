@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use App\Models\Item;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Storage;
 
 class AdminUserController extends Controller
 {
@@ -64,6 +65,11 @@ class AdminUserController extends Controller
         // ユーザーがコメントした商品の画像を取得
         $images = $user->comments()->with('item')->get()->pluck('item')->unique('id');
 
+        // S3のURLを取得
+        foreach ($images as $image) {
+            $image->img_url = Storage::disk('s3')->url($image->img_url);
+        }
+
         return view('admin.item_comments', compact('user', 'images'));
     }
 
@@ -75,6 +81,18 @@ class AdminUserController extends Controller
         // 商品に関連するコメントを取得
         $comments = $item->comments;
 
+        // コメントの画像URLをS3から取得
+        foreach ($comments as $comment) {
+            if (!empty($comment->img_url)) {
+                // S3から画像URLを取得
+                $comment->img_url = Storage::disk('s3')->url($comment->img_url);
+            } else {
+                // img_urlが空の場合、デフォルト画像を設定
+                $comment->img_url = asset('img/noimage.png');
+            }
+        }
+
+        // 'image' 変数は不要なので削除
         return view('admin.item_details', compact('item', 'comments'));
     }
 

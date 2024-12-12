@@ -9,6 +9,7 @@ use App\Models\Sold;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 
@@ -93,8 +94,10 @@ class PurchaseController extends Controller
             return redirect()->route('index')->with('error', '商品が見つかりませんでした。');
         }
 
-        // 画像URLを確認
-        $imageUrl = $item->img_url ? asset('storage/' . $item->img_url) : asset('img/noimage.png');
+        // S3の画像URLを取得
+        $imageUrl = $item->img_url
+        ? Storage::disk('s3')->url($item->img_url)
+        : asset('img/noimage.png');
         Log::info('Image URL: ' . $imageUrl);
 
         // 顧客IDの取得

@@ -17,20 +17,19 @@
             <div class="img__container">
                 @foreach ($images as $image)
                 <a href="/detail/{{ $image->id }}" class="image__link">
-                    <img class="post__img" src="{{ \Storage::url($image->img_url) }}" alt="{{ $image->name }}">
+                    <img class="post__img" src="{{ Storage::disk('s3')->url($image->img_url) }}" alt="{{ $image->name }}">
                 </a>
                 @endforeach
             </div>
         </div>
     </div>
 
-
     <div id="myListContent" class="tab__content" style="display: none;">
         <div class="recommendation">
             <div class="img__container">
                 @foreach ($likedItems as $item)
                 <a href="/detail/{{ $item->id }}" class="image__link">
-                    <img class="post__img" src="{{ asset('storage/' . $item->img_url) }}" alt="{{ $item->name }}">
+                    <img class="post__img" src="{{ Storage::disk('s3')->url($item->img_url) }}" alt="{{ $item->name }}">
                 </a>
                 @endforeach
             </div>

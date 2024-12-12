@@ -9,7 +9,8 @@
 @section('main')
 <div class="item-details-container">
     <div class="item-image">
-        <img src="{{ \Storage::url($item->img_url) }}" alt="{{ $item->name }}">
+        <!-- 商品画像の表示 -->
+        <img src="{{ $item->img_url ? Storage::disk('s3')->url($item->img_url) : asset('img/noimage.png') }}" alt="{{ $item->name }}">
     </div>
     <div class="item-info">
         <h2>{{ $item->name }}</h2>
@@ -23,6 +24,11 @@
             <div class="comment-header">
                 <p><strong>{{ $comment->user->profile->user_name ?? '匿名' }}</strong> さん:</p>
                 <p class="comment-content">{{ $comment->comment ?? 'コメント内容がありません' }}</p>
+            </div>
+
+            <!-- コメント画像の表示 -->
+            <div class="comment-image">
+                <img src="{{ $comment->img_url ? Storage::disk('s3')->url($comment->img_url) : asset('img/noimage.png') }}" alt="コメント画像">
             </div>
 
             <!-- コメント削除フォーム -->
