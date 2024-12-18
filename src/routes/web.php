@@ -91,3 +91,7 @@ Route::prefix('admin')->group(function () {
         Route::delete('/admin/comments/{comment}', [AdminUserController::class, 'destroyComment'])->name('admin.comments.destroy');
     });
 });
+
+Route::get('/test-error', function () {
+    return response()->json(['error' => 'Test error route works!'], 500);
+});

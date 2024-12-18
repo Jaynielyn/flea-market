@@ -1,7 +1,7 @@
 {
     "require": {
         "stripe/stripe-php": "^16.3",
-        "laravel-lang/lang": "^15.9",
+        "laravel-lang/lang": "^15.8",
         "aws/aws-sdk-php": "^3.334",
         "league/flysystem-aws-s3-v3": "^3.29"
     }
