@@ -1,51 +1,49 @@
-version: 2.1
+version: 2.1  # CircleCIのバージョン
 
 executors:
-  php-executor:
+  php-executor:  # PHP環境を定義
     docker:
-      - image: circleci/php:8.2-apache  # PHP 8.2の公式Dockerイメージを使用
-    working_directory: ~/repo
+      - image: circleci/php:8.2-fpm  # PHP 8.2を使用
+      - image: circleci/mysql:5.7  # MySQL 5.7を使用
+        environment:
+          MYSQL_DATABASE: flea_market  # データベース名
+          MYSQL_ROOT_PASSWORD: root  # MySQLのルートパスワード
+    working_directory: ~/repo  # 作業ディレクトリ
 
 jobs:
-  install_dependencies:
+  test:
     executor: php-executor
     steps:
-      - checkout  # コードをクローン
+      - checkout  # コードのチェックアウト
+
+      # 依存関係をインストール
       - run:
           name: Install dependencies
           command: |
-            sudo apt-get update
-            sudo apt-get install -y unzip
-            curl -sS https://getcomposer.org/installer | php
-            php composer.phar install --no-interaction  # Composerで依存関係をインストール
+            sudo apt-get update && sudo apt-get install -y zip unzip # zipツールをインストール
+            composer install  # Composerで依存関係をインストール
 
-  run_tests:
-    executor: php-executor
-    steps:
-      - checkout
+      # 環境ファイルの設定
       - run:
-          name: Run PHPUnit tests
+          name: Configure environment
           command: |
-            ./vendor/bin/phpunit --configuration phpunit.xml
+            cp .env.example .env  # 環境ファイルをコピー
+            php artisan key:generate  # アプリケーションキーを生成
 
-  deploy:
-    docker:
-      - image: circleci/php:8.2-apache
-    steps:
-      - checkout
+      # データベースの設定
       - run:
-          name: Deploy to production
+          name: Set up database
           command: |
-            echo "Deploying to production server"  # ここにデプロイ処理を追加します
+            php artisan migrate --force  # データベースのマイグレーションを実行
+
+      # PHPUnitのテストを実行
+      - run:
+          name: Run tests
+          command: |
+            ./vendor/bin/phpunit --testdox  # テストを実行し、結果を出力
 
 workflows:
   version: 2
-  build_and_deploy:
+  test:
     jobs:
-      - install_dependencies
-      - run_tests:
-          requires:
-            - install_dependencies
-      - deploy:
-          requires:
-            - run_tests
+      - test
